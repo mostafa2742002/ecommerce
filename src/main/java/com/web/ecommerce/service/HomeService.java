@@ -97,7 +97,7 @@ public class HomeService {
 
             return Products;
         } catch (Exception e) {
-            
+
             return Collections.emptyList();
         }
     }

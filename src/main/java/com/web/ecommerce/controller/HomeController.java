@@ -42,7 +42,7 @@ public class HomeController {
         return homeService.topSelling();
     }
 
-    @PostMapping("/home/verifyemail")
+    @GetMapping("/home/verifyemail")
     public ResponseEntity<String> verifyEmail(@RequestParam String token) {
         return homeService.verifyEmail(token);
     }
