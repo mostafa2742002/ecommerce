@@ -25,4 +25,8 @@ public class BrandsService {
         return brandRepository.save(brand);
     }
 
+    public Iterable<Brand> getBrands() {
+        return brandRepository.findAll();
+    }
+
 }
