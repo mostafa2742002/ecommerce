@@ -1,9 +1,11 @@
 package com.web.ecommerce.jwt;
 
+import com.web.ecommerce.user.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.web.ecommerce.model.User;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
