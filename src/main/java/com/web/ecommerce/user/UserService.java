@@ -92,6 +92,9 @@ public class UserService implements UserDetailsService {
     public JwtResponse login(@NonNull UserDTO userDTO) {
         userDTO.setEmail(userDTO.getEmail().toLowerCase());
         User user = userRepository.findByEmail(userDTO.getEmail());
+        if (user != null && bCryptPasswordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+            return new JwtResponse(jwtService.generateToken(user), jwtService.generateRefreshToken(user),user);
+        }
         throw new IllegalArgumentException("Invalid credentials");
     }
 
