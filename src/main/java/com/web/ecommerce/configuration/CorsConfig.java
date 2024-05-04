@@ -1,22 +1,30 @@
 package com.web.ecommerce.configuration;
 
-import jakarta.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
+
+import org.springframework.context.annotation.Bean;
+
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
-public class CorsConfig implements CorsConfigurationSource {
+public class CorsConfig {
 
-    @Override
-    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Collections.singletonList("*"));
-        config.setAllowedMethods(Collections.singletonList("*"));
+
+        // Allow all origins, methods, and headers for simplicity.
         config.setAllowCredentials(true);
-        config.setAllowedHeaders(Collections.singletonList("*"));
+        config.addAllowedOriginPattern("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
         config.setMaxAge(3600L);
-        return config;
+
+        // Apply the CORS configuration to all paths.
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 }

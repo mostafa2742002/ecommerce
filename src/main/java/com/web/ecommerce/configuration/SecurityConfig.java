@@ -13,9 +13,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.filter.CorsFilter;
 
-import com.web.ecommerce.filter.JwtFilter;
-import com.web.ecommerce.service.UserDetailsServiceImpl;
+import com.web.ecommerce.jwt.JwtFilter;
+import com.web.ecommerce.user.UserDetailsServiceImpl;
 
 /*
  * the explaination of the crsf and how it work is :
@@ -31,9 +33,11 @@ import com.web.ecommerce.service.UserDetailsServiceImpl;
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
+    private final CorsFilter corsFilter;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
+    public SecurityConfig(JwtFilter jwtFilter, CorsFilter corsFilter) {
         this.jwtFilter = jwtFilter;
+        this.corsFilter = corsFilter;
     }
 
     @Bean
@@ -44,17 +48,29 @@ public class SecurityConfig {
 
         http
 
-                .cors(cors -> cors.configurationSource(new CorsConfig()))
+                .addFilterBefore(corsFilter, CorsFilter.class)
                 //
                 // // i put the csrf config in the csrfconfig class and i will call it here
                 // .csrf((csrf) -> csrf.getClass().equals(CsrfConfig.class));
 
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/", "/error", "/webjars/**", "/index.html", "/signup", "/blog", "/blog/all",
-                                "/blog/**", "/signin", "/home/refreshtoken", "/home/**", "/home", "/home/addnewuser",
-                                "/home/authenticate", "/home/topselling",
-                                "/home/resentllyadded", "/home/validateToken", "/home/addnewuser", "/home/verifyemail",
-                                "/home/search", "/home/refreshtoken", "/home/generatetext", "/home/validatetoken")
+                        .requestMatchers("/", "/error", "/webjars/**", "/index.html", "/signup",
+                                "/signin", "/home/refreshtoken", "/home/**", "/home", "/home/addnewuser",
+                                "/home/authenticate",
+                                "/home/validateToken","/home/verifyemail",
+                                "/home/refreshtoken", "/home/validatetoken",
+                                "/auth/**",
+                                "/v2/api-docs",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/swagger-ui/**",
+                                "/webjars/**",
+                                "/swagger-ui.html"
+                                )
                         .permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
