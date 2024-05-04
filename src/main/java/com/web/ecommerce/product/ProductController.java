@@ -22,4 +22,20 @@ public class ProductController {
             @RequestParam(defaultValue = "title") String sortBy) {
         return productService.searchProducts(category, subCategory, brandId, colors, sizes, sortBy);
     }
+
+    @GetMapping("/discounted")
+    public Iterable<Product> getDiscountedProducts() {
+        return productService.getDiscountedProducts();
+    }
+
+    @GetMapping("/new")
+    public Iterable<Product> getNewProducts() {
+        return productService.getNewProducts();
+    }
+
+    @GetMapping("/popular")
+    public Iterable<Product> getPopularProducts() {
+        return productService.getPopularProducts();
+    }
+
 }
