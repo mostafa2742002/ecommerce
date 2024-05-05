@@ -16,11 +16,11 @@ public class ProductController {
     public Iterable<Product> searchProducts(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String subCategory,
-            @RequestParam(required = false) String brandId,
+            @RequestParam(required = false) String brand,
             @RequestParam(required = false) List<String> colors,
             @RequestParam(required = false) List<String> sizes,
             @RequestParam(defaultValue = "title") String sortBy) {
-        return productService.searchProducts(category, subCategory, brandId, colors, sizes, sortBy);
+        return productService.searchProducts(category, subCategory, brand, colors, sizes, sortBy);
     }
 
     @GetMapping("/discounted")

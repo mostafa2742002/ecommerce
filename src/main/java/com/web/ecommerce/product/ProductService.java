@@ -55,7 +55,7 @@ public class ProductService {
 
     // // filter by catigory and subcatigory and brand and size and color and sorted
     // by price or rating or buyed asc or desc for all products
-    public ArrayList<Product> searchProducts(String category, String subCategory, String brandId, List<String> colors,
+    public ArrayList<Product> searchProducts(String category, String subCategory, String brand, List<String> colors,
             List<String> sizes, String sortBy) {
         List<Product> Products = productRepository.findAll();
 
@@ -70,7 +70,7 @@ public class ProductService {
                 continue;
             }
 
-            if (brandId != null && !product.getBrand_id().equals(brandId)) {
+            if (brand != null && !product.getBrand().equals(brand)) {
                 continue;
             }
 

@@ -93,7 +93,7 @@ public class UserService implements UserDetailsService {
         userDTO.setEmail(userDTO.getEmail().toLowerCase());
         User user = userRepository.findByEmail(userDTO.getEmail());
         if (user != null && bCryptPasswordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            return new JwtResponse(jwtService.generateToken(user), jwtService.generateRefreshToken(user),user);
+            return new JwtResponse(jwtService.generateToken(user), jwtService.generateRefreshToken(user), user);
         }
         throw new IllegalArgumentException("Invalid credentials");
     }
@@ -400,5 +400,38 @@ public class UserService implements UserDetailsService {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid Token");
         }
+    }
+
+    public ResponseEntity<String> updateProfile(UserDTO user, String user_id) {
+
+        User user1 = userRepository.findById(user_id).orElse(null);
+
+        if (user1 == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        user1.setName(user.getName());
+        user1.setPhone(user.getPhone());
+        user1.setEmail(user.getEmail());
+        userRepository.save(user1);
+
+        return ResponseEntity.ok("Profile updated successfully");
+    }
+
+    public ResponseEntity<String> updatePassword(String user_id, String oldPassword, String newPassword) {
+        User user = userRepository.findById(user_id).orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Old password is incorrect");
+        }
+
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Password updated successfully");
     }
 }

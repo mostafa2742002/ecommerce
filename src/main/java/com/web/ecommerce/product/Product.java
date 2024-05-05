@@ -36,7 +36,7 @@ public class Product {
     private String image;
 
     @NotNull(message = "Brand id cannot be empty")
-    private String brand_id;
+    private String brand;
 
     @NotNull(message = "Color name cannot be empty")
     private ArrayList<String> color;

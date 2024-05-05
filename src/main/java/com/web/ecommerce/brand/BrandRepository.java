@@ -8,6 +8,4 @@ public interface BrandRepository extends MongoRepository<Brand, String> {
 
     Brand findByName(String name);
 
-    Brand findByLogo(String logo);
-
 }

@@ -20,7 +20,7 @@ public class BrandsController {
         return brandsService.saveBrand(brand);
     }
 
-    @DeleteMapping("/brands")
+    @DeleteMapping("/brand")
     public void deleteBrandById(@RequestParam String id) {
         brandsService.deleteBrandById(id);
     }

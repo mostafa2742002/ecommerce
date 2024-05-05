@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -126,5 +127,19 @@ public class UserController {
     @GetMapping("/product")
     public ResponseEntity<Product> getProduct(@RequestParam String product_id) {
         return userService.getProduct(product_id);
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<String> updateProfile(@RequestBody UserDTO user,@RequestParam String user_id) {
+        return userService.updateProfile(user, user_id);
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<String> updatePassword(@RequestBody JsonNode jsonNode) {
+        String user_id = jsonNode.get("user_id").asText();
+        String oldPassword = jsonNode.get("old_password").asText();
+        String newPassword = jsonNode.get("new_password").asText();
+
+        return userService.updatePassword(user_id, oldPassword, newPassword);
     }
 }
