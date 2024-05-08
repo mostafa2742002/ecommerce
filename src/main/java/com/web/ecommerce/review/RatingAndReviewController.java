@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 @RestController
 public class RatingAndReviewController {
 
@@ -16,12 +19,12 @@ public class RatingAndReviewController {
     private RatingService ratingService;
 
     @PostMapping("/review")
-    public Review addReview(@RequestBody Review Review) {
+    public Review addReview(@RequestBody @NotNull @Valid Review Review) {
         return ratingService.saveRating(Review);
     }
 
     @GetMapping("/review/{productId}")
-    public List<Review> getReviewsByProduct(@PathVariable String productId) {
+    public List<Review> getReviewsByProduct(@PathVariable @NotNull  String productId) {
         return ratingService.getRatingsByProduct(productId);
     }
 }

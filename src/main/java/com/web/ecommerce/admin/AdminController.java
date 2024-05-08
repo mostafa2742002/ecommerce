@@ -26,22 +26,22 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("/product")
-    public ResponseEntity<?> addProduct(@RequestBody @Valid Product product) {
+    public ResponseEntity<?> addProduct(@RequestBody @NotNull @Valid Product product) {
         return ResponseEntity.ok(adminService.addProduct(product));
     }
 
     @DeleteMapping("/product")
-    public ResponseEntity<?> removeProduct(@RequestParam String productId) {
+    public ResponseEntity<?> removeProduct(@RequestParam @NotNull String productId) {
         return ResponseEntity.ok(adminService.removeProduct(productId));
     }
 
     @PutMapping("/product")
-    public ResponseEntity<?> updateProduct(@RequestBody @Valid Product product) {
+    public ResponseEntity<?> updateProduct(@RequestBody @NotNull @Valid Product product) {
         return ResponseEntity.ok(adminService.updateProduct(product));
     }
 
     @GetMapping("/product")
-    public ResponseEntity<?> getProduct(@RequestParam String productId) {
+    public ResponseEntity<?> getProduct(@RequestParam @NotNull String productId) {
         return ResponseEntity.ok(adminService.getProduct(productId));
     }
 }

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 
 
 @RestController
@@ -18,22 +21,22 @@ public class OpeningAdsController {
     private OpeningAdsService openingAdsService;
 
     @PostMapping("/openingAds")
-    public OpeningAds addOpeningAds(@RequestBody OpeningAds openingAds) {
+    public OpeningAds addOpeningAds(@RequestBody @NotNull @Valid OpeningAds openingAds) {
         return openingAdsService.saveOpeningAds(openingAds);
     }
 
     @DeleteMapping("/OpeningAds")
-    public void deleteOpeningAdsById(@RequestParam String id) {
+    public void deleteOpeningAdsById(@RequestParam @NotNull String id) {
         openingAdsService.deleteOpeningAdsById(id);
     }
 
     @PutMapping("/OpeningAds")
-    public OpeningAds updateOpeningAds(@RequestBody OpeningAds openingAds) {
+    public OpeningAds updateOpeningAds(@RequestBody @NotNull @Valid OpeningAds openingAds) {
         return openingAdsService.updateOpeningAds(openingAds);
     }
 
     @GetMapping("/OpeningAds")
-    public OpeningAds getOpeningAdsById(@RequestParam String id) {
+    public OpeningAds getOpeningAdsById(@RequestParam @NotNull String id) {
         return openingAdsService.getOpeningAdsById(id);
     }
 

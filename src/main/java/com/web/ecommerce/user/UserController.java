@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<?> signup(@RequestBody @Valid @NotNull UserDTO userDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(userDTO));
         } catch (MessagingException | InterruptedException e) {
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> login(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<?> login(@RequestBody @Valid @NotNull UserDTO userDTO) {
         try {
             return ResponseEntity.ok(userService.login(userDTO));
         } catch (AuthenticationException e) {
@@ -54,84 +54,74 @@ public class UserController {
     }
 
     @GetMapping("/home/verifyemail")
-    public ResponseEntity<String> verifyEmail(@RequestParam String token) {
+    public ResponseEntity<String> verifyEmail(@RequestParam @NotNull String token) {
         return userService.verifyEmail(token);
     }
 
-    @PostMapping("/me/profile-picture")
-    public ResponseEntity<String> saveCurrentUserProfilePicture(@RequestBody @NotNull JsonNode user) {
-        String email = user.get("email").asText();
-        String image = user.get("image").asText();
-
-        userService.saveProfileImage(email, image);
-        return ResponseEntity.ok("image added");
-
-    }
-
     @GetMapping("/refresh-token")
-    public String postMethodName(@RequestParam String refreshToken) {
+    public String postMethodName(@RequestParam @NotNull String refreshToken) {
         return userService.refreshToken(refreshToken);
     }
 
     @PostMapping("/star")
-    public ResponseEntity<String> addStar(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
+    public ResponseEntity<String> addStar(@RequestBody @Valid @NotNull CartAndStarDTO cartAndStarDTO) {
         return userService.addStar(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @GetMapping("/star")
-    public ResponseEntity<List<Product>> getStar(@RequestParam String user_id) {
+    public ResponseEntity<List<Product>> getStar(@RequestParam  @NotNull String user_id) {
         return userService.getStar(user_id);
     }
 
     @DeleteMapping("/star")
-    public ResponseEntity<String> removeStar(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
+    public ResponseEntity<String> removeStar(@RequestBody @Valid @NotNull CartAndStarDTO cartAndStarDTO) {
 
         return userService.removeStar(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @PostMapping("/cart")
-    public ResponseEntity<String> addCart(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
+    public ResponseEntity<String> addCart(@RequestBody @Valid @NotNull CartAndStarDTO cartAndStarDTO) {
         return userService.addCart(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @GetMapping("/cart")
-    public ResponseEntity<List<Product>> getCart(@RequestParam String user_id) {
+    public ResponseEntity<List<Product>> getCart(@RequestParam @NotNull String user_id) {
         return userService.getCart(user_id);
     }
 
     @DeleteMapping("/cart")
-    public ResponseEntity<String> removeCart(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
+    public ResponseEntity<String> removeCart(@RequestBody @Valid @NotNull CartAndStarDTO cartAndStarDTO) {
         return userService.removeCart(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @PostMapping("/order")
-    public ResponseEntity<String> addOrder(@RequestBody Order order) {
+    public ResponseEntity<String> addOrder(@RequestBody @Valid @NotNull Order order) {
         return userService.addOrder(order);
     }
 
     @DeleteMapping("/order")
-    public ResponseEntity<String> removeOrder(@RequestBody Order order) {
+    public ResponseEntity<String> removeOrder(@RequestBody @Valid @NotNull Order order) {
         return userService.removeOrder(order);
 
     }
 
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> getOrders(@RequestParam String user_id) {
+    public ResponseEntity<List<Order>> getOrders(@RequestParam  @NotNull String user_id) {
         return userService.getOrders(user_id);
     }
 
     @GetMapping("/product")
-    public ResponseEntity<Product> getProduct(@RequestParam String product_id) {
+    public ResponseEntity<Product> getProduct(@RequestParam @NotNull String product_id) {
         return userService.getProduct(product_id);
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<String> updateProfile(@RequestBody UserDTO user, @RequestParam String user_id) {
+    public ResponseEntity<String> updateProfile(@RequestBody @NotNull UserDTO user, @RequestParam String user_id) {
         return userService.updateProfile(user, user_id);
     }
 
     @PutMapping("/password")
-    public ResponseEntity<String> updatePassword(@RequestBody PasswordDTO passwordDTO) {
+    public ResponseEntity<String> updatePassword(@RequestBody @NotNull PasswordDTO passwordDTO) {
 
         return userService.updatePassword(passwordDTO.getUserId(), passwordDTO.getOldPassword(),
                 passwordDTO.getNewPassword());
