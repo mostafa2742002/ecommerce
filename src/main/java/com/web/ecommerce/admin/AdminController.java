@@ -26,28 +26,16 @@ public class AdminController {
 
     @PostMapping("/product")
     public ResponseEntity<?> addProduct(@RequestBody @Valid Product product) {
-        try {
-            return ResponseEntity.ok(adminService.addProduct(product));
-        } catch (DataAccessException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding product");
-        }
+        return ResponseEntity.ok(adminService.addProduct(product));
     }
 
     @DeleteMapping("/product")
     public ResponseEntity<?> removeProduct(@RequestParam String productId) {
-        try {
-            return ResponseEntity.ok(adminService.removeProduct(productId));
-        } catch (EmptyResultDataAccessException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
-        }
+        return ResponseEntity.ok(adminService.removeProduct(productId));
     }
 
     @PutMapping("/product")
     public ResponseEntity<?> updateProduct(@RequestBody @Valid Product product) {
-        try {
-            return ResponseEntity.ok(adminService.updateProduct(product));
-        } catch (DataAccessException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating product");
-        }
+        return ResponseEntity.ok(adminService.updateProduct(product));
     }
 }

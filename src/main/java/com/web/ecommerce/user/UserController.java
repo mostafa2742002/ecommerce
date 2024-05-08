@@ -53,12 +53,10 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/home/verifyemail")
     public ResponseEntity<String> verifyEmail(@RequestParam String token) {
         return userService.verifyEmail(token);
     }
-
 
     @PostMapping("/me/profile-picture")
     public ResponseEntity<String> saveCurrentUserProfilePicture(@RequestBody @NotNull JsonNode user) {
@@ -70,42 +68,30 @@ public class UserController {
 
     }
 
-    @PostMapping("/refresh-token")
-    public String postMethodName(@RequestBody JsonNode token) {
-        String refreshToken = token.get("refreshToken").asText();
+    @GetMapping("/refresh-token")
+    public String postMethodName(@RequestParam String refreshToken) {
         return userService.refreshToken(refreshToken);
     }
 
     @PostMapping("/star")
-    public ResponseEntity<String> addStar(@RequestBody JsonNode jsonNode) {
-        String user_id = jsonNode.get("user_id").asText();
-        String product_id = jsonNode.get(" product_id").asText();
-
-        return userService.addStar(user_id, product_id);
+    public ResponseEntity<String> addStar(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
+        return userService.addStar(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @DeleteMapping("/star")
-    public ResponseEntity<String> removeStar(@RequestBody JsonNode jsonNode) {
-        String user_id = jsonNode.get("user_id").asText();
-        String product_id = jsonNode.get(" product_id").asText();
+    public ResponseEntity<String> removeStar(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
 
-        return userService.removeStar(user_id, product_id);
+        return userService.removeStar(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @PostMapping("/cart")
-    public ResponseEntity<String> addCart(@RequestBody JsonNode jsonNode) {
-        String user_id = jsonNode.get("user_id").asText();
-        String product_id = jsonNode.get(" product_id").asText();
-
-        return userService.addCart(user_id, product_id);
+    public ResponseEntity<String> addCart(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
+        return userService.addCart(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @DeleteMapping("/cart")
-    public ResponseEntity<String> removeCart(@RequestBody JsonNode jsonNode) {
-        String user_id = jsonNode.get("user_id").asText();
-        String product_id = jsonNode.get(" product_id").asText();
-
-        return userService.removeCart(user_id, product_id);
+    public ResponseEntity<String> removeCart(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
+        return userService.removeCart(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
     @PostMapping("/order")
@@ -130,16 +116,14 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<String> updateProfile(@RequestBody UserDTO user,@RequestParam String user_id) {
+    public ResponseEntity<String> updateProfile(@RequestBody UserDTO user, @RequestParam String user_id) {
         return userService.updateProfile(user, user_id);
     }
 
     @PutMapping("/password")
-    public ResponseEntity<String> updatePassword(@RequestBody JsonNode jsonNode) {
-        String user_id = jsonNode.get("user_id").asText();
-        String oldPassword = jsonNode.get("old_password").asText();
-        String newPassword = jsonNode.get("new_password").asText();
+    public ResponseEntity<String> updatePassword(@RequestBody PasswordDTO passwordDTO) {
 
-        return userService.updatePassword(user_id, oldPassword, newPassword);
+        return userService.updatePassword(passwordDTO.getUserId(), passwordDTO.getOldPassword(),
+                passwordDTO.getNewPassword());
     }
 }
