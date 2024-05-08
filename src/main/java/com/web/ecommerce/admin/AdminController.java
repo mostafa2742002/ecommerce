@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +38,10 @@ public class AdminController {
     @PutMapping("/product")
     public ResponseEntity<?> updateProduct(@RequestBody @Valid Product product) {
         return ResponseEntity.ok(adminService.updateProduct(product));
+    }
+
+    @GetMapping("/product")
+    public ResponseEntity<?> getProduct(@RequestParam String productId) {
+        return ResponseEntity.ok(adminService.getProduct(productId));
     }
 }

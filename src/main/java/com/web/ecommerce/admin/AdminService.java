@@ -36,4 +36,8 @@ public class AdminService {
         return "Product updated successfully";
     }
 
+    public Object getProduct(String productId) {
+        return productRepository.findById(productId);
+    }
+
 }

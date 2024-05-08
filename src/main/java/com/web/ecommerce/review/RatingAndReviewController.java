@@ -20,7 +20,7 @@ public class RatingAndReviewController {
         return ratingService.saveRating(Review);
     }
 
-    @GetMapping("/product/{productId}")
+    @GetMapping("/review/{productId}")
     public List<Review> getReviewsByProduct(@PathVariable String productId) {
         return ratingService.getRatingsByProduct(productId);
     }
