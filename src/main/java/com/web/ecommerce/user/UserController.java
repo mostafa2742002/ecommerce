@@ -89,6 +89,11 @@ public class UserController {
         return userService.addCart(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
+    @GetMapping("/cart")
+    public ResponseEntity<List<Product>> getCart(@RequestParam String user_id) {
+        return userService.getCart(user_id);
+    }
+
     @DeleteMapping("/cart")
     public ResponseEntity<String> removeCart(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
         return userService.removeCart(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
