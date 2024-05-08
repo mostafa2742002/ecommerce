@@ -456,4 +456,26 @@ public class UserService implements UserDetailsService {
 
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
+
+    public ResponseEntity<List<Product>> getStar(String user_id) {
+        User user = userRepository.findById(user_id).orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        List<String> productIds = user.getStar();
+
+        if (productIds == null || productIds.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ArrayList<>());
+        }
+
+        List<Product> products = new ArrayList<>();
+
+        for (String id : productIds) {
+            productRepository.findById(id).ifPresent(products::add);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
 }

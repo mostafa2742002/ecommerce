@@ -78,6 +78,11 @@ public class UserController {
         return userService.addStar(cartAndStarDTO.getUser_id(), cartAndStarDTO.getProduct_id());
     }
 
+    @GetMapping("/star")
+    public ResponseEntity<List<Product>> getStar(@RequestParam String user_id) {
+        return userService.getStar(user_id);
+    }
+
     @DeleteMapping("/star")
     public ResponseEntity<String> removeStar(@RequestBody @Valid CartAndStarDTO cartAndStarDTO) {
 
