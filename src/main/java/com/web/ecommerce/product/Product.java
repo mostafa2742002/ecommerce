@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.web.ecommerce.review.Review;
+
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
@@ -53,7 +55,7 @@ public class Product {
 
     private double rating = 0.0;
 
-    private ArrayList<String> reviews;
+    private ArrayList<Review> reviews;
 
     private int buyed = 0;
 
