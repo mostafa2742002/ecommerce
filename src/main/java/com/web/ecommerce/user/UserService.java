@@ -370,6 +370,14 @@ public class UserService implements UserDetailsService {
 
         p.setRating(averageRating);
 
+        List<Review> reviews = reviewRepository.findByProductId(product_id);
+        // add reviews to product
+        ArrayList<Review> reviewss = new ArrayList<Review>();
+        for (Review review : reviews) {
+            reviewss.add(review);
+        }
+        product.get().setReviews(reviewss);
+
         return ResponseEntity.status(HttpStatus.OK).body(p);
     }
 

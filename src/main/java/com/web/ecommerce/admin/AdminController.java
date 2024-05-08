@@ -40,8 +40,4 @@ public class AdminController {
         return ResponseEntity.ok(adminService.updateProduct(product));
     }
 
-    @GetMapping("/product")
-    public ResponseEntity<?> getProduct(@RequestParam @NotNull String productId) {
-        return ResponseEntity.ok(adminService.getProduct(productId));
-    }
 }

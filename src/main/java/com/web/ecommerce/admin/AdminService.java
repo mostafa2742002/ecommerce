@@ -44,19 +44,5 @@ public class AdminService {
         return "Product updated successfully";
     }
 
-    public ResponseEntity<?> getProduct(String productId) {
-        Optional<Product> product = productRepository.findById(productId);
-        if (!product.isPresent()) {
-            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
-        }
-        List<Review> reviews = reviewRepository.findByProductId(productId);
-        // add reviews to product
-        ArrayList<Review> reviewss = new ArrayList<Review>();
-        for (Review review : reviews) {
-            reviewss.add(review);
-        }
-        product.get().setReviews(reviewss);
-        return new ResponseEntity<>(product, HttpStatus.OK);
-    }
 
 }
