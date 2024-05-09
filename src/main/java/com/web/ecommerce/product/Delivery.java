@@ -7,6 +7,6 @@ public class Delivery {
 
     private String type;
 
-    private String price;
+    private int price;
 
 }

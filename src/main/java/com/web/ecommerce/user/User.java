@@ -46,6 +46,8 @@ public class User implements UserDetails {
     @NotNull(message = "phone shouldn't be null")
     private String phone;
 
+    private ArrayList<String> address;
+
     private String token;
     private String image;
     private String gender;

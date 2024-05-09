@@ -443,7 +443,7 @@ public class UserService implements UserDetailsService {
         return ResponseEntity.ok("Password updated successfully");
     }
 
-    public ResponseEntity<List<Product>> getCart(String user_id) {
+    public ResponseEntity<Object> getCart(String user_id) {
         User user = userRepository.findById(user_id).orElse(null);
 
         if (user == null) {
@@ -462,7 +462,14 @@ public class UserService implements UserDetailsService {
             productRepository.findById(id).ifPresent(products::add);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(products);
+        int subTotal = 0;
+        int shipping = 0;
+        for (Product product : products) {
+            subTotal += product.getPrice();
+            shipping = Math.max(shipping, product.getDelivery().get(0).getPrice());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new CartResponse(products, subTotal, shipping));
     }
 
     public ResponseEntity<List<Product>> getStar(String user_id) {
@@ -485,5 +492,24 @@ public class UserService implements UserDetailsService {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
+
+    public ResponseEntity<String> addAddress(String NewAddress, String user_id) {
+        User user = userRepository.findById(user_id).orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        if (user.getAddress() == null) {
+            user.setAddress(new ArrayList<>());
+        }
+
+        user.getAddress().add(NewAddress);
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Address added successfully");
+
     }
 }

@@ -85,7 +85,7 @@ public class UserController {
     }
 
     @GetMapping("/cart")
-    public ResponseEntity<List<Product>> getCart(@RequestParam @NotNull String user_id) {
+    public ResponseEntity<?> getCart(@RequestParam @NotNull String user_id) {
         return userService.getCart(user_id);
     }
 
@@ -118,6 +118,11 @@ public class UserController {
     @PutMapping("/profile")
     public ResponseEntity<String> updateProfile(@RequestBody @NotNull UserDTO user, @RequestParam String user_id) {
         return userService.updateProfile(user, user_id);
+    }
+
+    @PostMapping("/address")
+    public ResponseEntity<String> addAddress(@RequestParam String newAddress, @RequestParam String user_id) {
+        return userService.addAddress(newAddress, user_id);
     }
 
     @PutMapping("/password")
