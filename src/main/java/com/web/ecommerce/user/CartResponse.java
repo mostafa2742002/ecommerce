@@ -18,4 +18,5 @@ public class CartResponse {
     List<Product> products;
     int subTotal;
     int shipping;
+    int total;
 }

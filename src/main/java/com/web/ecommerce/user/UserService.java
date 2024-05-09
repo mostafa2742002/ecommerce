@@ -464,12 +464,14 @@ public class UserService implements UserDetailsService {
 
         int subTotal = 0;
         int shipping = 0;
+        int total = 0;
         for (Product product : products) {
             subTotal += product.getPrice();
             shipping = Math.max(shipping, product.getDelivery().get(0).getPrice());
         }
+        total = subTotal + shipping;
 
-        return ResponseEntity.status(HttpStatus.OK).body(new CartResponse(products, subTotal, shipping));
+        return ResponseEntity.status(HttpStatus.OK).body(new CartResponse(products, subTotal, shipping, total));
     }
 
     public ResponseEntity<List<Product>> getStar(String user_id) {
